@@ -1,5 +1,7 @@
+const figlet = require('figlet');
 const readlineSync = require('readline-sync');
 const chalk = require('chalk');
+const terminalLink = require('terminal-link');
 
 let score = 0;
 
@@ -59,47 +61,81 @@ const questionSetTwo = [
   }
 ];
 
+const leaderBoard = [{
+  name : 'Alpha',
+  score : '9'
+},
+{
+  name : 'Beta ',
+  score : '8'
+},
+{
+  name : 'Gamma',
+  score : '7'
+}];
 
 function letsPlay(questionSet) {
   score = 0;
   for(let i=0; i < questionSet.length ; i++)
-{
-  var index = readlineSync.keyInSelect(questionSet[i].option, questionSet[i].question );
-  console.log(questionSet[i].option[index]);
-  if(questionSet[i].option[index] == questionSet[i].answer) {
-    console.log(chalk.bgGreen("Correct"));
-    score ++;
-  } else {
-    console.log(chalk.bgRed("Wrong"));
+  {
+    var index = readlineSync.keyInSelect(questionSet[i].option, questionSet[i].question );
+    console.log(questionSet[i].option[index]);
+    if(questionSet[i].option[index] == questionSet[i].answer) {
+      console.log(chalk.bgGreen("Correct"));
+      score ++;
+    } else {
+      console.log(chalk.bgRed("Wrong"));
+    }
+    console.log(chalk.bgYellow('Current Score : '+score));
+    console.log(chalk.blue("============================================================================="));
   }
-  console.log(chalk.bgYellow('Current Score : '+score));
-  console.log(chalk.blue("============================================================================="));
-}
-console.log(chalk.bgBlue('Your Score after this level: '+score));
-return score;
+  console.log(chalk.bgBlue('Your Score after this level: '+score));
+  return score;
 }
 
-var roundOneScore = letsPlay(questionSetOne);
-console.log(roundOneScore);
-if(roundOneScore == 5) {
-console.log('You answered all the questions correctly,moving onto the next level!');
-var roundTwoScore = letsPlay(questionSetTwo);
-console.log(roundTwoScore);
-} else {
-  console.log('Try harder to move onto the next level!');
-}
+figlet('JavascriptXover', function(err, data) {
+    if (err) {
+        console.log('Something went wrong...');
+        console.dir(err);
+        return;
+    }
+    console.log(chalk.yellow(data));
+    const link = terminalLink('Made with ❤ codewithbravopy', "https://www.instagram.com/codewithbravopy");
+    console.log(chalk.bgCyan(link));
+    gameStart();
+});
 
-// for(let i=0; i < questionSetOne.length ; i++)
-// {
-//   var index = readlineSync.keyInSelect(questionSetOne[i].option, questionSetOne[i].question );
-//   console.log(questionSetOne[i].option[index]);
-//   if(questionSetOne[i].option[index] == questionSetOne[i].answer) {
-//     console.log(chalk.bgGreen("Correct"));
-//     score ++;
-//   } else {
-//     console.log(chalk.bgRed("Wrong"));
-//   }
-//   console.log(chalk.bgYellow('Current Score : '+score));
-//   console.log(chalk.blue("============================================================================="));
-// }
-// console.log(chalk.bgBlue('Your Score after Level 1 : '+score));
+
+const gameStart = () => {
+  var userName = readlineSync.question('May I have your name? ');
+  console.log(chalk.cyan('Hi ' + userName + '!'));
+  console.log(chalk.green('The rules are simple, answer all the questions correctly in level 1 to procced to the next one! All the best!👍'));
+  var roundOneScore = letsPlay(questionSetOne);
+  
+  if(roundOneScore == 5) {
+    console.log(chalk.red('You answered all the questions correctly,moving onto the next level!'));
+    var roundTwoScore = letsPlay(questionSetTwo);
+    console.log(chalk.green("============================================================================="));
+    console.log(chalk.blue("====================================GAME OVER================================"));
+    console.log(chalk.green("============================================================================="));
+    console.log(chalk.red('Your final score is : ',roundOneScore+roundTwoScore));
+    if(roundOneScore+roundTwoScore == 10) {
+      console.log(chalk.bgBlue('Damn, you are good!'));
+    } else {
+      console.log(chalk.bgBlue('You are getting there almost!'));
+    }
+    console.log(chalk.bgRed('=======LEADERBOARD======='));
+    console.log(chalk.bgCyan(`Name      Score`));
+    for(var i = 0; i < leaderBoard.length; i++) {
+      console.log(chalk.bgCyan(`${leaderBoard[i].name}     ${leaderBoard[i].score}`));
+    }
+    console.log(chalk.bgCyan('========================='));
+    if (leaderBoard[leaderBoard.length-1].score < (roundOneScore+roundTwoScore)) {
+      console.log("Send me a screenshot of your score so that i can update your name in the leaderboard!");
+    } else {
+      console.log('Try harder to enter the leaderboard');
+    }
+  } else {
+    console.log(chalk.bgRed('Try harder to move onto the next level!'));
+  }
+} 
