@@ -46,7 +46,7 @@ const questionSetTwo = [
   },
   {
     question : "Stack means",
-    answer : "FIFO",
+    answer : "FILO",
     option : ['FIFA','FILA','FIFO','FILO']
   },
   {
@@ -63,15 +63,15 @@ const questionSetTwo = [
 
 const leaderBoard = [{
   name : 'Alpha',
-  score : '9'
+  score : '10'
 },
 {
   name : 'Beta ',
-  score : '8'
+  score : '10'
 },
 {
   name : 'Gamma',
-  score : '7'
+  score : '9'
 }];
 
 function letsPlay(questionSet) {
