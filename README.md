@@ -3,7 +3,9 @@ This CLI App, is a quiz app based on the crossover of Javascript Framework and M
 
 ---
 ### Rule of the Game
-This is a level-based game with two levels. You can qualify for level 2, only if you answer all the questions right in the first level.   
+
+This is a CLI-based quiz with two levels. You can qualify for level 2, after answering all the question in level 1.   
+
 ---
 ### Packages Used
 * figlet 
